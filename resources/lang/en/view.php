@@ -12,6 +12,7 @@ return [
     'insert_data' => 'Insert Data',
     'import_data' => 'Import Data',
     'submit' => 'Submit',
+    'cancel' => 'Cancel',
     'close' => 'Close',
     'spec_material' => 'Spec Material :Name',
     'period' => 'Period',

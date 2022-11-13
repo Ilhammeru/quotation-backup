@@ -39,6 +39,7 @@
                 <div class="form-group mt-3">
                     <div class="d-flex align-items-center justify-content-end pr-5">
                         <button class="btn btn-sm bg-primary-blue" type="button" id="btn-submit" onclick="save()">{{ __('view.submit') }}</button>
+                        <a class="btn btn-sm bg-primary-warning ml-2" href="{{ route('setting.roles') }}">{{ __('view.cancel') }}</a>
                     </div>
                 </div>
                 {{-- end::action --}}
