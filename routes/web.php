@@ -58,4 +58,13 @@ Route::prefix('admin')->middleware('auth')->group(function() use ($materials) {
     // role and permission
     Route::get('/permissions', [RolePermissionController::class, 'permissions'])->name('setting.permissions');
     Route::get('/permissions/ajax', [RolePermissionController::class, 'ajaxPermission'])->name('setting.permissions.ajax');
+    Route::post('/permissions', [RolePermissionController::class, 'storePermission'])->name('setting.permissions.store');
+    Route::get('/permissions/{id}', [RolePermissionController::class, 'editPermission'])->name('setting.permissions.edit');
+    Route::put('/permissions/{id}', [RolePermissionController::class, 'updatePermission'])->name('setting.permissions.update');
+    Route::get('/roles', [RolePermissionController::class, 'roles'])->name('setting.roles');
+    Route::get('/roles/ajax', [RolePermissionController::class, 'ajaxRoles'])->name('setting.roles.ajax');
+    Route::post('/roles', [RolePermissionController::class, 'storeRole'])->name('setting.roles.store');
+    Route::get('/roles/{id}', [RolePermissionController::class, 'showRoles'])->name('setting.roles.show');
+    Route::put('/roles/{id}', [RolePermissionController::class, 'updateRoles'])->name('setting.roles.update');
+    Route::delete('/roles/{id}', [RolePermissionController::class, 'destroyRole'])->name('setting.roles.destroy');
 });
