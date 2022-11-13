@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('material_specs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('material_id')->unsigned();
-            $table->string('spesification');
+            $table->string('spesification', 255);
             $table->timestamps();
         });
     }
