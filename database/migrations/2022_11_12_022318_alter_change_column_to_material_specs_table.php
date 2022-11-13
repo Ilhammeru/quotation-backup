@@ -29,7 +29,7 @@ return new class extends Migration
         Schema::table('material_specs', function (Blueprint $table) {
             Schema::table('material_specs', function (Blueprint $table) {
                 $table->dropColumn('specification');
-                $table->string('spesification', 255);
+                $table->string('spesification', 100);
             });
         });
     }
