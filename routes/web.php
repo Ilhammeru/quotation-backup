@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\RolePermissionController;
 use App\Models\Material;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +17,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-$materials = Material::all();
+// $materials = Material::all();
+$materials = [
+    [
+        'id' => 1,
+        'name' => 'Resin'
+    ],
+    [
+        'id' => 2,
+        'name' => 'Steel'
+    ],
+    [
+        'id' => 3,
+        'name' => 'Urethane'
+    ],
+    [
+        'id' => 4,
+        'name' => 'Fabric'
+    ],
+];
 
 // authentication
 Route::get('/', [AuthController::class, 'index'])->name('login');
@@ -29,10 +48,14 @@ Route::prefix('admin')->middleware('auth')->group(function() use ($materials) {
     Route::post('/material/import', [MaterialController::class, 'import'])->name('material.import');
     Route::post('/material/submit-import', [MaterialController::class, 'submitImport'])->name('material.submit-import');
     foreach ($materials as $material) {
-        Route::get('material/' . $material->name . '/{type}', [MaterialController::class, 'index'])->name('material.' . $material->name);
+        Route::get('material/' . $material['name'] . '/{type}', [MaterialController::class, 'index'])->name('material.' . $material['name']);
         Route::post('material/{type}/store', [MaterialController::class, 'store'])->name('material.store');
         Route::get('material/{type}/{id}/edit', [MaterialController::class, 'edit'])->name('material.edit');
         Route::put('material/{id}', [MaterialController::class, 'update'])->name('material.update');
         Route::delete('material/{id}', [MaterialController::class, 'destroy'])->name('material.destroy');
     }
+
+    // role and permission
+    Route::get('/permissions', [RolePermissionController::class, 'permissions'])->name('setting.permissions');
+    Route::get('/permissions/ajax', [RolePermissionController::class, 'ajaxPermission'])->name('setting.permissions.ajax');
 });
