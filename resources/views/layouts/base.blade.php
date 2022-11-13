@@ -30,6 +30,8 @@
     {{-- global javascript bundle --}}
     <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('assets/lte/js/scripts.bundle.js') }}"></script>
+    {{-- bootstrap icon --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
     {{-- custom css --}}
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     

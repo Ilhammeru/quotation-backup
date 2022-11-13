@@ -20,5 +20,12 @@ return [
     'confirm_cancel_text' => 'Cancel',
     'confirm_delete_button' => 'Yes!, delete it',
     "don't_have_template" => "Don't have a template yet?",
-    'download' => 'Download'
+    'download' => 'Download',
+    'setting' => 'Setting',
+    'user' => 'User',
+    'role_permission' => 'Role and Permission',
+    'permissions' => 'Permissions',
+    'edit' => 'Edit',
+    'create_permission' => 'Create Permission',
+    'permission_name' => 'Permission Name'
 ];

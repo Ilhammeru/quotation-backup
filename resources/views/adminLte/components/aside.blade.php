@@ -60,6 +60,38 @@
                     </ul>
                 </li>
 
+                {{-- begin:;setting --}}
+                <li
+                    class="nav-item {{ areActiveRoutes(['setting', 'setting.index', 'setting.permissions'], 'menu-is-opening menu-open active') }}">
+                    <a href="#"
+                        class="nav-link {{ areActiveRoutes([], 'menu-is-opening menu-open active') }}">
+                        <i class="bi bi-gear"></i>
+                        <p>
+                            {{ __('view.setting') }}
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+
+                    <ul class="nav nav-treeview">
+                        {{-- User --}}
+                        <li class="nav-item">
+                            <a href="#"
+                                class="nav-link {{ areActiveRoutes([]) }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ __('view.user') }}</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('setting.permissions') }}"
+                                class="nav-link {{ areActiveRoutes(['setting.permissions']) }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ __('view.permissions') }}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {{-- end::setting --}}
+
                 <!--end::Menu-->
             </ul>
             <!--end::Aside Menu-->
