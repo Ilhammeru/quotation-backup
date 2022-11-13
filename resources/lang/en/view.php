@@ -17,8 +17,10 @@ return [
     'period' => 'Period',
     'material_rate' => 'Material Rate',
     'confirm_delete_text' => 'Are you sure to delete this material?',
+    'confirm_delete_text_role' => 'Are you sure to delete this role?',
     'confirm_cancel_text' => 'Cancel',
     'confirm_delete_button' => 'Yes!, delete it',
+    'delete' => 'Delete',
     "don't_have_template" => "Don't have a template yet?",
     'download' => 'Download',
     'setting' => 'Setting',
@@ -27,5 +29,11 @@ return [
     'permissions' => 'Permissions',
     'edit' => 'Edit',
     'create_permission' => 'Create Permission',
-    'permission_name' => 'Permission Name'
+    'permission_name' => 'Permission Name',
+    'roles' => 'Roles',
+    'create_role' => 'Create Role',
+    'role_name' => 'Role Name',
+    'show' => 'Show',
+    'detail_role' => 'Detail Role',
+    'permission_list' => 'Permission List'
 ];

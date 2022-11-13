@@ -62,7 +62,7 @@
 
                 {{-- begin:;setting --}}
                 <li
-                    class="nav-item {{ areActiveRoutes(['setting', 'setting.index', 'setting.permissions'], 'menu-is-opening menu-open active') }}">
+                    class="nav-item {{ areActiveRoutes(['setting', 'setting.index', 'setting.permissions', 'setting.roles'], 'menu-is-opening menu-open active') }}">
                     <a href="#"
                         class="nav-link {{ areActiveRoutes([], 'menu-is-opening menu-open active') }}">
                         <i class="bi bi-gear"></i>
@@ -86,6 +86,13 @@
                                 class="nav-link {{ areActiveRoutes(['setting.permissions']) }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>{{ __('view.permissions') }}</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('setting.roles') }}"
+                                class="nav-link {{ areActiveRoutes(['setting.roles']) }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ __('view.roles') }}</p>
                             </a>
                         </li>
                     </ul>

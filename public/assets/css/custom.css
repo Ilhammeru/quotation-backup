@@ -24,7 +24,7 @@
 .main-page-title {
     font-size: 30px;
     color: #8F7E7E;
-    padding-top: 10px;
+    padding-top: 30px;
 }
 
 .btn-item {
@@ -111,3 +111,4 @@ label.required:after {
     border-color: #D9D9D9;
 }
 /* end::pagination */
+
