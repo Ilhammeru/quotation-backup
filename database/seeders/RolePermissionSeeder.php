@@ -17,17 +17,44 @@ class RolePermissionSeeder extends Seeder
      */
     public function run()
     {
-        Role::findByName('manager')->delete();
-        Role::findByName('supervisor')->delete();
-        Role::findByName('staff')->delete();
+        $manager = Role::findByName('manager');
+        if ($manager) {
+            $manager->delete();
+        }
+        $supervisor = Role::findByName('supervisor');
+        if ($supervisor) {
+            $supervisor->delete();
+        }
+        $staff = Role::findByName('staff');
+        if ($staff) {
+            $staff->delete();
+        }
 
-        Permission::findByName('manage-setting')->delete();
-        Permission::findByName('create-material')->delete();
-        Permission::findByName('update-material')->delete();
-        Permission::findByName('show-material')->delete();
-        Permission::findByName('delete-material')->delete();
-        Permission::findByName('update-price')->delete();
-
+        $manage_setting = Permission::findByName('manage-setting');
+        if ($manage_setting) {
+            $manage_setting->delete();
+        }
+        $create_material = Permission::findByName('create-material');
+        if ($create_material) {
+            $$create_material->delete();
+        }
+        $upload_material = Permission::findByName('update-material');
+        if ($upload_material) {
+            $upload_material->delete();
+        }
+        $show_material = Permission::findByName('show-material');
+        if ($show_material) {
+            $show_material->delete();
+        }
+        $delete_material = Permission::findByName('delete-material');
+        if ($delete_material) {
+            $delete_material->delete();
+        }
+        $update_price = Permission::findByName('update-price');
+        if ($update_price) {
+            $update_price->delete();
+        }
+        
         Role::create(['name' => 'manager']);
         Role::create(['name' => 'supervisor']);
         Role::create(['name' => 'staff']);
