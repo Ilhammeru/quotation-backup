@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\UserController;
 use App\Models\Material;
 use Illuminate\Support\Facades\Route;
 
@@ -67,4 +68,7 @@ Route::prefix('admin')->middleware('auth')->group(function() use ($materials) {
     Route::get('/roles/{id}', [RolePermissionController::class, 'showRoles'])->name('setting.roles.show');
     Route::put('/roles/{id}', [RolePermissionController::class, 'updateRoles'])->name('setting.roles.update');
     Route::delete('/roles/{id}', [RolePermissionController::class, 'destroyRole'])->name('setting.roles.destroy');
+
+    // user
+    Route::resource('users', UserController::class);
 });
