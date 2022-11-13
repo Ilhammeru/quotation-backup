@@ -136,7 +136,7 @@ class RolePermissionController extends Controller
     {
         $data = Role::findById($id);
         $permissions = $data->permissions;
-        $pageTitle = __('view.detail_role');
+        $pageTitle = setPageTitle(__('view.detail_role'));
         $title = __('view.detail_role');
         $all_permissions = Permission::all();
         $all_permissions = collect($all_permissions)->map(function($permission) use ($permissions) {
