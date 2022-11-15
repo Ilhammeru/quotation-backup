@@ -23,15 +23,15 @@
             <!--begin::Aside Menu-->
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!--begin::Menu-->
-                {{-- <li class="nav-item">
-                    <a href=""
+                {{-- begin::logout --}}
+                <li class="nav-item">
+                    <a href="{{ route('dashboard') }}"
                         class="nav-link {{ areActiveRoutes([]) }}">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Dashboard
-                        </p>
+                        {{-- <i class="far fa-circle nav-icon"></i> --}}
+                        <p>{{ __('view.dashboard') }}</p>
                     </a>
-                </li> --}}
+                </li>
+                {{-- end::logout --}}
 
                 <li class="nav-header">{{-- __('view.pages') --}} Master TMMIN</li>
 
@@ -46,58 +46,72 @@
                         </p>
                     </a>
 
-                    <ul class="nav nav-treeview">
-                        <!-- all type -->
-                        @foreach ($materials as $material)
-                            <li class="nav-item">
-                                <a href="{{ route('material.' . $material->name, $material->name) }}"
-                                    class="nav-link {{ areActiveRoutes(['material.' . $material->name]) }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>{{ ucfirst($material->name) }}</p>
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
+                    @if (auth()->user()->can('manage-material'))
+                        <ul class="nav nav-treeview">
+                            <!-- all type -->
+                            @foreach ($materials as $material)
+                                <li class="nav-item">
+                                    <a href="{{ route('material.' . $material->name, $material->name) }}"
+                                        class="nav-link {{ areActiveRoutes(['material.' . $material->name]) }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{ ucfirst($material->name) }}</p>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </li>
 
                 {{-- begin:;setting --}}
-                <li
-                    class="nav-item {{ areActiveRoutes(['setting', 'setting.index', 'setting.permissions', 'setting.roles', 'setting.roles.show'], 'menu-is-opening menu-open active') }}">
-                    <a href="#"
-                        class="nav-link {{ areActiveRoutes([], 'menu-is-opening menu-open active') }}">
-                        <i class="bi bi-gear"></i>
-                        <p>
-                            {{ __('view.setting') }}
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
+                @if (auth()->user()->can('manage-setting'))
+                    <li
+                        class="nav-item {{ areActiveRoutes(['setting', 'setting.index', 'setting.permissions', 'setting.roles', 'setting.roles.show', 'users.index'], 'menu-is-opening menu-open active') }}">
+                        <a href="#"
+                            class="nav-link {{ areActiveRoutes([], 'menu-is-opening menu-open active') }}">
+                            <i class="bi bi-gear"></i>
+                            <p>
+                                {{ __('view.setting') }}
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
 
-                    <ul class="nav nav-treeview">
-                        {{-- User --}}
-                        <li class="nav-item">
-                            <a href="#"
-                                class="nav-link {{ areActiveRoutes([]) }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>{{ __('view.user') }}</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('setting.permissions') }}"
-                                class="nav-link {{ areActiveRoutes(['setting.permissions']) }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>{{ __('view.permissions') }}</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('setting.roles') }}"
-                                class="nav-link {{ areActiveRoutes(['setting.roles', 'setting.roles.show']) }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>{{ __('view.roles') }}</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                        <ul class="nav nav-treeview">
+                            {{-- User --}}
+                            <li class="nav-item">
+                                <a href="{{ route('users.index') }}"
+                                    class="nav-link {{ areActiveRoutes(['users.index']) }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{ __('view.user') }}</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('setting.permissions') }}"
+                                    class="nav-link {{ areActiveRoutes(['setting.permissions']) }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{ __('view.permissions') }}</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('setting.roles') }}"
+                                    class="nav-link {{ areActiveRoutes(['setting.roles', 'setting.roles.show']) }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{ __('view.roles') }}</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
                 {{-- end::setting --}}
+
+                {{-- begin::logout --}}
+                <li class="nav-item">
+                    <a href="{{ route('logout') }}"
+                        class="nav-link {{ areActiveRoutes([]) }}">
+                        {{-- <i class="far fa-circle nav-icon"></i> --}}
+                        <p>{{ __('view.logout') }}</p>
+                    </a>
+                </li>
+                {{-- end::logout --}}
 
                 <!--end::Menu-->
             </ul>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
@@ -42,9 +43,21 @@ $materials = [
 Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
+// error page unauthorized
+Route::get('/dont-have-permission', function() {
+    return view('dont-have-permission');
+})->name('dont-have-permission');
+
 // material
 Route::get('/material/download/template', [MaterialController::class, 'downloadTemplate'])->name('material.download-template');
 Route::prefix('admin')->middleware('auth')->group(function() use ($materials) {
+    // logout
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    // dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // material
     Route::get('/material/data/ajax/{type}', [MaterialController::class, 'ajax'])->name('material.ajax');
     Route::post('/material/import', [MaterialController::class, 'import'])->name('material.import');
     Route::post('/material/submit-import', [MaterialController::class, 'submitImport'])->name('material.submit-import');
@@ -70,5 +83,6 @@ Route::prefix('admin')->middleware('auth')->group(function() use ($materials) {
     Route::delete('/roles/{id}', [RolePermissionController::class, 'destroyRole'])->name('setting.roles.destroy');
 
     // user
-    Route::resource('users', UserController::class);
+    Route::get('/users/ajax', [UserController::class, 'ajax'])->name('users.ajax');
+    Route::resource('users', UserController::class)->middleware('role:manage-user');
 });

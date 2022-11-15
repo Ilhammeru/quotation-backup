@@ -25,6 +25,13 @@
         <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
         <script src="{{ asset('assets/lte/js/scripts.bundle.js') }}"></script>
 
+        <style>
+            .bg-primary-blue {
+                background: #2F5CCF;
+                color: #fff;
+            }
+        </style>
+
         @yield('styles')
     </head>
     <body class="hold-transition login-page">
