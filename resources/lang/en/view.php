@@ -19,6 +19,7 @@ return [
     'material_rate' => 'Material Rate',
     'confirm_delete_text' => 'Are you sure to delete this material?',
     'confirm_delete_text_role' => 'Are you sure to delete this role?',
+    'confirm_delete_text_user' => 'Are you sure to delete this user?',
     'confirm_cancel_text' => 'Cancel',
     'confirm_delete_button' => 'Yes!, delete it',
     'delete' => 'Delete',
@@ -32,9 +33,16 @@ return [
     'create_permission' => 'Create Permission',
     'permission_name' => 'Permission Name',
     'roles' => 'Roles',
+    'role' => 'Role',
     'create_role' => 'Create Role',
     'role_name' => 'Role Name',
     'show' => 'Show',
     'detail_role' => 'Detail Role',
-    'permission_list' => 'Permission List'
+    'permission_list' => 'Permission List',
+    'users' => 'Users',
+    'create_user' => 'Create User',
+    'choose' => 'Choose',
+    'logout' => 'Logout',
+    'dashboard' => 'Dashboard',
+    'unauthorized' => 'Unauthorized'
 ];

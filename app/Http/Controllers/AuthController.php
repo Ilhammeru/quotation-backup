@@ -23,6 +23,13 @@ class AuthController extends Controller
         return view('login');
     }
 
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        return redirect()->route('login');
+    }
+
     /**
      * Function to handle login request
      * @param string email
@@ -53,7 +60,7 @@ class AuthController extends Controller
                     ->withInput();
             }
 
-            return redirect()->route('material.Resin', 'resin')->with(['message_alert' => 'Login Success']);
+            return redirect()->route('dashboard')->with(['message_alert' => 'Login Success']);
 
         } catch (\Throwable $th) {
             return back()
