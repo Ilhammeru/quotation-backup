@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\CurrencyService;
 use App\Models\CurrencyValue;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -31,9 +32,11 @@ class CurrencyValueController extends Controller
         if ($validate) {
             $ajax_url = route('currency.ajax', ['type' => $type, 'group' => $group]);
             $store_url = route('currency.store', ['type' => $type, 'group' => $group]);
+            $import_url = route('currency.import', ['type' => $type, 'group' => $group]);
+            $submit_import_url = route('currency.submit-import', ['type' => $type, 'group' => $group]);
             $pageTitle = setPageTitle(__('view.currency_title', ['name' => strtoupper($validate['group']) . ' ' . ucfirst($validate['type'])]));
             $title = __('view.currency_title', ['name' => strtoupper($validate['group']) . ' ' . ucfirst($validate['type'])]);
-            return view('adminLte.pages.currency.index', compact('type', 'group', 'pageTitle', 'title', 'ajax_url', 'store_url'));
+            return view('adminLte.pages.currency.index', compact('type', 'group', 'pageTitle', 'title', 'ajax_url', 'store_url', 'import_url', 'submit_import_url'));
         }
     }
 
@@ -67,6 +70,101 @@ class CurrencyValueController extends Controller
             })
             ->rawColumns(['period', 'value', 'action'])
             ->make(true);
+    }
+
+    /**
+     * Function to retrieve all import data before save to database
+     * @return Renderable
+     */
+    public function import(Request $request, $type, $group)
+    {
+        try {
+            $validation = Validator::make($request->all(), [
+                'file' => 'required'
+            ]);
+            if ($validation->fails()) {
+                return response()->json(['message' => 'Please fill the required form'], 500);
+            }
+
+            $service = new CurrencyService();
+            $res = $service->read($request->file);
+            if (isset($res['error'])) {
+                return response()->json(['message' => $res['message']], 500);
+            }
+            $import = $res['data'];
+            $view = view('adminLte.pages.currency.import-overview', compact('import'))->render();
+            return response()->json(['view' => $view, 'filename' => $res['filename'], 'type' => $type, 'group' => $group]);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Function to process imported file and save to database
+     * @param string filename
+     * @return Response
+     */
+    public function submitImport(Request $request, $type, $group)
+    {
+        DB::beginTransaction();
+        try {
+            $filename = $request->current_file;
+            
+            $service = new CurrencyService();
+            $read = $service->read(null, $filename);
+            if (isset($read['error'])) {
+                return response()->json(['message' => $read['message']], 500);
+            }
+            $data = $read['data'];
+            $service = new CurrencyService();
+
+            $material_rate_format = [];
+            $type_id = $service->getTypeId($type);
+            $a = 0;
+            foreach ($data as $key => $item) {
+                $group_id = $service->getGroupId($key);
+                $b = 0;
+                foreach ($item as $i) {
+                    if (!$i['value']) {
+                        return response()->json(['message' => 'Please check your file, and make sure all field are filled'], 500);
+                    }
+                    CurrencyValue::updateOrCreate(
+                        [
+                            'currency_type_id' => $type_id,
+                            'currency_group_id' => $group_id,
+                            'period' => $i['period']
+                        ],
+                        [
+                            'value' => $i['value']
+                        ]
+                    );
+
+                    $b++;
+                }
+                $a++;
+            }
+
+            DB::commit();
+            return response()->json(['message' => 'Success import data']);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json(['message' => $th->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Function to download material template
+     * @return File
+     */
+    public function downloadTemplate()
+    {
+        try {
+            return response()->download('currency_template.xlsx');
+        } catch (\Throwable $th) {
+            return back()
+                ->with(['error_message_alert' => $th->getMessage()]);
+                // ->with(['error_message_alert' => 'Failed to download template']);
+        }
     }
 
     /**

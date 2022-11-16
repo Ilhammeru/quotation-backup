@@ -83,6 +83,7 @@ Route::get('/dont-have-permission', function() {
 // material
 Route::get('/material/download/template', [MaterialController::class, 'downloadTemplate'])->name('material.download-template');
 Route::get('/process/download/template', [ProcessRateController::class, 'downloadTemplate'])->name('process.download-template');
+Route::get('/currency/download/template', [CurrencyValueController::class, 'downloadTemplate'])->name('currency.download-template');
 
 Route::prefix('admin')->middleware('auth')->group(function() use ($materials, $currency_type, $currency) {
     // logout
@@ -111,8 +112,8 @@ Route::prefix('admin')->middleware('auth')->group(function() use ($materials, $c
 
     // currency
     Route::get('/currency/data/ajax/{type}/{group}', [CurrencyValueController::class, 'ajax'])->name('currency.ajax');
-    Route::post('/currency/import', [CurrencyValueController::class, 'import'])->name('currency.import');
-    Route::post('/currency/submit-import', [CurrencyValueController::class, 'submitImport'])->name('currency.submit-import');
+    Route::post('/currency/import/{type}/{group}', [CurrencyValueController::class, 'import'])->name('currency.import');
+    Route::post('/currency/submit-import/{type}/{group}', [CurrencyValueController::class, 'submitImport'])->name('currency.submit-import');
     Route::post('currency/main/{type}/{group}/store', [CurrencyValueController::class, 'store'])->name('currency.store');
     Route::get('currency/main/{type}/{group}/{id}/show', [CurrencyValueController::class, 'show'])->name('currency.show');
     Route::put('currency/main/{type}/{group}/{id}/update', [CurrencyValueController::class, 'update'])->name('currency.update');
