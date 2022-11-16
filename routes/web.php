@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\ProcessRateController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
 use App\Models\Material;
@@ -50,6 +51,8 @@ Route::get('/dont-have-permission', function() {
 
 // material
 Route::get('/material/download/template', [MaterialController::class, 'downloadTemplate'])->name('material.download-template');
+Route::get('/process/download/template', [ProcessRateController::class, 'downloadTemplate'])->name('process.download-template');
+
 Route::prefix('admin')->middleware('auth')->group(function() use ($materials) {
     // logout
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -68,6 +71,12 @@ Route::prefix('admin')->middleware('auth')->group(function() use ($materials) {
         Route::put('material/{id}', [MaterialController::class, 'update'])->name('material.update');
         Route::delete('material/{id}', [MaterialController::class, 'destroy'])->name('material.destroy');
     }
+
+    // Process
+    Route::post('/process/import', [ProcessRateController::class, 'import'])->name('process.import');
+    Route::get('/process/ajax', [ProcessRateController::class, 'ajax'])->name('process.ajax');
+    Route::post('/process/submit-import', [ProcessRateController::class, 'submitImport'])->name('process.submit-import');
+    Route::resource('process', ProcessRateController::class);
 
     // role and permission
     Route::get('/permissions', [RolePermissionController::class, 'permissions'])->name('setting.permissions');

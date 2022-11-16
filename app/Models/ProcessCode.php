@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ProcessCode extends Model
 {
     use HasFactory;
+    protected $table = 'process_code';
+    protected $fillable = ['name', 'process_id'];
 }

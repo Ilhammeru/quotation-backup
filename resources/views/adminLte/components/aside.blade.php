@@ -62,6 +62,16 @@
                     @endif
                 </li>
 
+                {{-- begin::process --}}
+                <li class="nav-item">
+                    <a href="{{ route('process.index') }}"
+                        class="nav-link {{ areActiveRoutes([]) }}">
+                        <i class="fas fa-box-open"></i>
+                        <p>{{ __('view.process') }}</p>
+                    </a>
+                </li>
+                {{-- end::process --}}
+
                 {{-- begin:;setting --}}
                 @if (auth()->user()->can('manage-setting'))
                     <li
