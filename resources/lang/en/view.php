@@ -20,6 +20,7 @@ return [
     'confirm_delete_text' => 'Are you sure to delete this material?',
     'confirm_delete_text_role' => 'Are you sure to delete this role?',
     'confirm_delete_text_user' => 'Are you sure to delete this user?',
+    'confirm_delete_text_process' => 'Are you sure to delete this process?',
     'confirm_cancel_text' => 'Cancel',
     'confirm_delete_button' => 'Yes!, delete it',
     'delete' => 'Delete',
@@ -44,5 +45,8 @@ return [
     'choose' => 'Choose',
     'logout' => 'Logout',
     'dashboard' => 'Dashboard',
-    'unauthorized' => 'Unauthorized'
+    'unauthorized' => 'Unauthorized',
+    'process' => 'Process',
+    'process_group' => 'Process Group',
+    'process_rate' => 'Process Rate'
 ];
