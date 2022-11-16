@@ -61,18 +61,19 @@
 
                 <li class="nav-header">{{-- __('view.pages') --}} Master TMMIN</li>
 
-                <li
-                    class="nav-item {{ areActiveRoutes($materialRoute, 'menu-is-opening menu-open active') }}">
-                    <a href="#"
-                        class="nav-link {{ areActiveRoutes([], 'menu-is-opening menu-open active') }}">
-                        <i class="fas fa-box-open"></i>
-                        <p>
-                            {{ __('view.material') }}
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
+                @if (auth()->user()->can('manage-material'))
+                    <li
+                        class="nav-item {{ areActiveRoutes($materialRoute, 'menu-is-opening menu-open active') }}">
+                        <a href="#"
+                            class="nav-link {{ areActiveRoutes([], 'menu-is-opening menu-open active') }}">
+                            <i class="fas fa-box-open"></i>
+                            <p>
+                                {{ __('view.material') }}
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
 
-                    @if (auth()->user()->can('manage-material'))
+                        
                         <ul class="nav nav-treeview">
                             <!-- all type -->
                             @foreach ($materials as $material)
@@ -85,61 +86,65 @@
                                 </li>
                             @endforeach
                         </ul>
-                    @endif
-                </li>
+                    </li>
+                @endif
 
                 {{-- begin::process --}}
-                <li class="nav-item">
-                    <a href="{{ route('process.index') }}"
-                        class="nav-link {{ areActiveRoutes([]) }}">
-                        <i class="fas fa-box-open"></i>
-                        <p>{{ __('view.process') }}</p>
-                    </a>
-                </li>
+                @if (auth()->user()->can('manage-process'))
+                    <li class="nav-item">
+                        <a href="{{ route('process.index') }}"
+                            class="nav-link {{ areActiveRoutes([]) }}">
+                            <i class="fas fa-box-open"></i>
+                            <p>{{ __('view.process') }}</p>
+                        </a>
+                    </li>
+                @endif
                 {{-- end::process --}}
 
                 {{-- begin::currency --}}
-                <li
-                    class="nav-item {{ areActiveRoutes($currency_route, 'menu-is-opening menu-open active') }}">
-                    <a href="#"
-                        class="nav-link {{ areActiveRoutes([], 'menu-is-opening menu-open active') }}">
-                        <i class="bi bi-cash"></i>
-                        <p>
-                            {{ __('view.currency') }}
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
+                @if (auth()->user()->can('manage-currency'))
+                    <li
+                        class="nav-item {{ areActiveRoutes($currency_route, 'menu-is-opening menu-open active') }}">
+                        <a href="#"
+                            class="nav-link {{ areActiveRoutes([], 'menu-is-opening menu-open active') }}">
+                            <i class="bi bi-cash"></i>
+                            <p>
+                                {{ __('view.currency') }}
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
 
-                    <ul class="nav nav-treeview">
-                        <!-- all type -->
-                        @foreach ($currency_type as $type)
-                            <li
-                                class="nav-item {{ request()->segment(4) == $type['slug'] ? 'menu-is-opening menu-open active' : '' }} {{ areActiveRoutes([], 'menu-is-opening menu-open active') }}">
-                                <a href="#"
-                                    class="nav-link {{ areActiveRoutes([], 'menu-is-opening menu-open active') }}">
-                                    <i class="bi bi-currency-dollar"></i>
-                                    <p>
-                                        {{ $type['name'] }}
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-            
-                                <ul class="nav nav-treeview">
-                                    <!-- all type -->
-                                    @foreach ($currency_group as $group)
-                                        <li class="nav-item">
-                                            <a href="{{ route('currency.' . $type['slug'] . '.' . $group['name']) }}"
-                                                class="nav-link {{ request()->segment(5) == $group['name'] && request()->segment(4) == $type['slug'] ? 'active' : '' }}">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>{{ ucfirst($group['name']) }}</p>
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </li>
-                        @endforeach
-                    </ul>
-                </li>
+                        <ul class="nav nav-treeview">
+                            <!-- all type -->
+                            @foreach ($currency_type as $type)
+                                <li
+                                    class="nav-item {{ request()->segment(4) == $type['slug'] ? 'menu-is-opening menu-open active' : '' }} {{ areActiveRoutes([], 'menu-is-opening menu-open active') }}">
+                                    <a href="#"
+                                        class="nav-link {{ areActiveRoutes([], 'menu-is-opening menu-open active') }}">
+                                        <i class="bi bi-currency-dollar"></i>
+                                        <p>
+                                            {{ $type['name'] }}
+                                            <i class="right fas fa-angle-left"></i>
+                                        </p>
+                                    </a>
+                
+                                    <ul class="nav nav-treeview">
+                                        <!-- all type -->
+                                        @foreach ($currency_group as $group)
+                                            <li class="nav-item">
+                                                <a href="{{ route('currency.' . $type['slug'] . '.' . $group['name']) }}"
+                                                    class="nav-link {{ request()->segment(5) == $group['name'] && request()->segment(4) == $type['slug'] ? 'active' : '' }}">
+                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <p>{{ ucfirst($group['name']) }}</p>
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </li>
+                @endif
                 {{-- end::currency --}}
 
                 {{-- begin:;setting --}}
