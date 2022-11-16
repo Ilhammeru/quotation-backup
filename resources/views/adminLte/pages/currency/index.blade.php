@@ -59,7 +59,7 @@
                     <p class="title">+ Import Data</p>
                 </div>
                 {{-- begin::form --}}
-                <form id="form-import-currency" action="{{ route('material.import') }}" method="post" enctype="multipart/form-data">
+                <form id="form-import-currency" action="{{ $import_url }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="body">
                         <div class="form-group mb-3">
@@ -67,7 +67,7 @@
                             <input type="file" name="file" class="form-control" accept=".xlsx,.xlsb" id="file">
                         </div>
                         <div class="form-group mb-3">
-                            <p class="m-0">{{ __("view.don't_have_template") }} {{ __('view.download') }} <a href="{{ route('material.download-template') }}">here</a></p>
+                            <p class="m-0">{{ __("view.don't_have_template") }} {{ __('view.download') }} <a href="{{ route('currency.download-template') }}">here</a></p>
                         </div>
                     </div>
                     <div class="footer d-flex align-items-end justify-content-end">
@@ -83,7 +83,7 @@
     </div>
 
     <div class="modal modal-q fade" id="modalOverview"  data-backdrop="static"data-keyboard="false" tabindex="-1" aria-labelledby="modalOverview" aria-hidden="true">
-        <form action="{{ route('material.submit-import') }}" method="post">
+        <form action="{{ $submit_import_url }}" method="post">
             @csrf
             <div class="modal-dialog modal-lg modal-dialog-scrollable">
                 <div class="modal-content p-0 bg-transparent border-none">
@@ -163,7 +163,7 @@
             let data = $('#current_file').val();
             $.ajax({
                 type: 'POST',
-                url: "{{ route('material.submit-import') }}",
+                url: "{{ $submit_import_url }}",
                 data: {
                     current_file: data
                 },
