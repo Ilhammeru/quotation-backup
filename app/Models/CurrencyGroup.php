@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class CurrencyGroup extends Model
 {
     use HasFactory;
+    protected $table = 'currency_group';
+    protected $fillable = ['name'];
 }

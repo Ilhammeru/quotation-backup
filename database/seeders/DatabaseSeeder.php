@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             MaterialSeeder::class,
             RolePermissionSeeder::class,
-            ProcessSeeder::class
+            ProcessSeeder::class,
+            CurrencySeeder::class
         ]);
     }
 }

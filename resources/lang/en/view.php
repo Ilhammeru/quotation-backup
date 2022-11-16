@@ -16,11 +16,13 @@ return [
     'close' => 'Close',
     'spec_material' => 'Spec Material :Name',
     'period' => 'Period',
+    'value' => 'Value',
     'material_rate' => 'Material Rate',
     'confirm_delete_text' => 'Are you sure to delete this material?',
     'confirm_delete_text_role' => 'Are you sure to delete this role?',
     'confirm_delete_text_user' => 'Are you sure to delete this user?',
     'confirm_delete_text_process' => 'Are you sure to delete this process?',
+    'confirm_delete_text_currency' => 'Are you sure to delete this currency?',
     'confirm_cancel_text' => 'Cancel',
     'confirm_delete_button' => 'Yes!, delete it',
     'delete' => 'Delete',
@@ -48,5 +50,7 @@ return [
     'unauthorized' => 'Unauthorized',
     'process' => 'Process',
     'process_group' => 'Process Group',
-    'process_rate' => 'Process Rate'
+    'process_rate' => 'Process Rate',
+    'currency' => 'Currency',
+    'currency_title' => 'Data Qurrency :Name'
 ];
