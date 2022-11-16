@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CurrencyValueController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\ProcessRateController;
@@ -40,6 +41,36 @@ $materials = [
     ],
 ];
 
+$currency = [
+    [
+        'id' => 1,
+        'name' => 'IDR',
+    ],
+    [
+        'id' => 1,
+        'name' => 'USD',
+    ],
+    [
+        'id' => 1,
+        'name' => 'JPY',
+    ],
+    [
+        'id' => 1,
+        'name' => 'THB',
+    ],
+];
+
+$currency_type = [
+    [
+        'id' => 1,
+        'name' => 'slide'
+    ],
+    [
+        'id' => 2,
+        'name' => 'non-slide'
+    ],
+];
+
 // authentication
 Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
@@ -53,7 +84,7 @@ Route::get('/dont-have-permission', function() {
 Route::get('/material/download/template', [MaterialController::class, 'downloadTemplate'])->name('material.download-template');
 Route::get('/process/download/template', [ProcessRateController::class, 'downloadTemplate'])->name('process.download-template');
 
-Route::prefix('admin')->middleware('auth')->group(function() use ($materials) {
+Route::prefix('admin')->middleware('auth')->group(function() use ($materials, $currency_type, $currency) {
     // logout
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -78,6 +109,21 @@ Route::prefix('admin')->middleware('auth')->group(function() use ($materials) {
     Route::post('/process/submit-import', [ProcessRateController::class, 'submitImport'])->name('process.submit-import');
     Route::resource('process', ProcessRateController::class);
 
+    // currency
+    Route::get('/currency/data/ajax/{type}/{group}', [CurrencyValueController::class, 'ajax'])->name('currency.ajax');
+    Route::post('/currency/import', [CurrencyValueController::class, 'import'])->name('currency.import');
+    Route::post('/currency/submit-import', [CurrencyValueController::class, 'submitImport'])->name('currency.submit-import');
+    Route::post('currency/main/{type}/{group}/store', [CurrencyValueController::class, 'store'])->name('currency.store');
+    Route::get('currency/main/{type}/{group}/{id}/show', [CurrencyValueController::class, 'show'])->name('currency.show');
+    Route::put('currency/main/{type}/{group}/{id}/update', [CurrencyValueController::class, 'update'])->name('currency.update');
+    Route::delete('currency/main/{id}', [CurrencyValueController::class, 'destroy'])->name('currency.destroy');
+    foreach ($currency_type as $type) {
+        foreach ($currency as $group) {
+            Route::get('currency/main/' . $type['name'] . '/' . $group['name'], [CurrencyValueController::class, 'index'])->name('currency.' . $type['name'] . '.' . $group['name']);
+            Route::get('currency/main/'.$type['name'] . '/' . $group['name'] .'/{id}/edit', [CurrencyValueController::class, 'edit'])->name('currency.edit');
+        }
+    }
+    
     // role and permission
     Route::get('/permissions', [RolePermissionController::class, 'permissions'])->name('setting.permissions');
     Route::get('/permissions/ajax', [RolePermissionController::class, 'ajaxPermission'])->name('setting.permissions.ajax');

@@ -2,6 +2,32 @@
     $materials = \App\Models\Material::all();
     $materialRoute = collect($materials)->pluck('name')->all();
     $materialRoute = collect($materialRoute)->map(function($item) {return 'material.' . $item;})->all();
+    $currency_type = [
+        [
+            'id' => \App\Models\CurrencyValue::SLIDE_TYPE,
+            'name' => 'Slide',
+            'slug' => 'slide'
+        ],
+        [
+            'id' => \App\Models\CurrencyValue::NON_SLIDE_TYPE,
+            'name' => 'Non Slide',
+            'slug' => 'non-slide'
+        ]
+    ];
+
+    $currency_group = [
+        ['name' => 'IDR'],
+        ['name' => 'USD'],
+        ['name' => 'JPY'],
+        ['name' => 'THB'],
+    ];
+
+    $currency_route = [];
+    foreach ($currency_type as $type) {
+        foreach ($currency_group as $group) {
+            $currency_route[] = 'currency.' . $type['slug'] . '.' . $group['name'];
+        }
+    }
 @endphp
 
 <!--begin::Aside-->
@@ -59,7 +85,7 @@
                                 </li>
                             @endforeach
                         </ul>
-                    @endifn
+                    @endif
                 </li>
 
                 {{-- begin::process --}}
@@ -73,7 +99,47 @@
                 {{-- end::process --}}
 
                 {{-- begin::currency --}}
+                <li
+                    class="nav-item {{ areActiveRoutes($currency_route, 'menu-is-opening menu-open active') }}">
+                    <a href="#"
+                        class="nav-link {{ areActiveRoutes([], 'menu-is-opening menu-open active') }}">
+                        <i class="bi bi-cash"></i>
+                        <p>
+                            {{ __('view.currency') }}
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
 
+                    <ul class="nav nav-treeview">
+                        <!-- all type -->
+                        @foreach ($currency_type as $type)
+                            <li
+                                class="nav-item {{ request()->segment(4) == $type['slug'] ? 'menu-is-opening menu-open active' : '' }} {{ areActiveRoutes([], 'menu-is-opening menu-open active') }}">
+                                <a href="#"
+                                    class="nav-link {{ areActiveRoutes([], 'menu-is-opening menu-open active') }}">
+                                    <i class="bi bi-currency-dollar"></i>
+                                    <p>
+                                        {{ $type['name'] }}
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+            
+                                <ul class="nav nav-treeview">
+                                    <!-- all type -->
+                                    @foreach ($currency_group as $group)
+                                        <li class="nav-item">
+                                            <a href="{{ route('currency.' . $type['slug'] . '.' . $group['name']) }}"
+                                                class="nav-link {{ request()->segment(5) == $group['name'] && request()->segment(4) == $type['slug'] ? 'active' : '' }}">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>{{ ucfirst($group['name']) }}</p>
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
+                        @endforeach
+                    </ul>
+                </li>
                 {{-- end::currency --}}
 
                 {{-- begin:;setting --}}
