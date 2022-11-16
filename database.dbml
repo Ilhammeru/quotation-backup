@@ -59,3 +59,20 @@ Table process_rate {
     created_at timestamp
     update_at timestamp
 }
+
+Table currency_group {
+    id [int, increment]
+    name varchar [not null]
+    created_at timestamp
+    updated_at timestamp
+}
+
+Table currency_value {
+    id [int, increment]
+    currency_type_id tinyint [not null, note: '1 for slide and 2 for non-slide']
+    currency_group_id int [not null, ref: > currency_group.id]
+    period date [not null]
+    value double [not null]
+    created_at timestamp
+    updated_at timestamp
+}

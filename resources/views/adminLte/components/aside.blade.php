@@ -59,7 +59,7 @@
                                 </li>
                             @endforeach
                         </ul>
-                    @endif
+                    @endifn
                 </li>
 
                 {{-- begin::process --}}
@@ -71,6 +71,10 @@
                     </a>
                 </li>
                 {{-- end::process --}}
+
+                {{-- begin::currency --}}
+
+                {{-- end::currency --}}
 
                 {{-- begin:;setting --}}
                 @if (auth()->user()->can('manage-setting'))
