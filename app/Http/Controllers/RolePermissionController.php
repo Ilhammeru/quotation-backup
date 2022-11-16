@@ -120,8 +120,7 @@ class RolePermissionController extends Controller
         $data = Role::all();
         return DataTables::of($data)
             ->addColumn('action', function($d) {
-                return '<a class="btn btn-sm bg-primary-warning" href="'. route('setting.roles.show', $d->id) .'">'. __('view.show') .'</a>
-                    <button class="btn btn-sm bg-primary-danger" type="button" onclick="deleteItem('. $d->id .')">'. __('view.delete').'</button>';
+                return '<a class="btn btn-sm bg-primary-warning" href="'. route('setting.roles.show', $d->id) .'">'. __('view.show') .'</a>';
             })
             ->rawColumns(['action'])
             ->make(true);

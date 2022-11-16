@@ -55,24 +55,20 @@ class RolePermissionSeeder extends Seeder
         //     $update_price->delete();
         // }
 
-        Role::create(['name' => 'manager']);
-        Role::create(['name' => 'supervisor']);
-        Role::create(['name' => 'staff']);
+        $manager = Role::findOrCreate('manager');
+        $spv = Role::findOrCreate('supervisor');
+        $staff = Role::findOrCreate('staff');
 
-        Permission::create(['name' => 'manage-setting']);
-        Permission::create(['name' => 'create-material']);
-        Permission::create(['name' => 'update-material']);
-        Permission::create(['name' => 'show-material']);
-        Permission::create(['name' => 'delete-material']);
-        Permission::create(['name' => 'update-price']);
+        $manageSetting = Permission::findOrCreate('manage-setting');
+        $manageMaterial = Permission::findOrCreate('manage-material');
+        $manageProcess = Permission::findOrCreate('manage-process');
+        $manageCurrency = Permission::findOrCreate('manage-currency');
 
         // assign permission to role
         $user = User::where('email', 'admin@gmail.com')->first();
         $allPermission = Permission::all();
         foreach ($allPermission as $permission) {
-            $role = Role::findByName('manager');
-            $role->givePermissionTo($permission);
-
+            $manager->givePermissionTo($permission);
         }
         //asign role to dummy user
         $user->assignRole('manager');

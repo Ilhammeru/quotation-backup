@@ -140,5 +140,5 @@ Route::prefix('admin')->middleware('auth')->group(function() use ($materials, $c
 
     // user
     Route::get('/users/ajax', [UserController::class, 'ajax'])->name('users.ajax');
-    Route::resource('users', UserController::class)->middleware('role:manage-user');
+    Route::resource('users', UserController::class);
 });
