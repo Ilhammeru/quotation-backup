@@ -125,9 +125,6 @@ class CurrencyValueController extends Controller
                 $group_id = $service->getGroupId($key);
                 $b = 0;
                 foreach ($item as $i) {
-                    if (!$i['value']) {
-                        return response()->json(['message' => 'Please check your file, and make sure all field are filled'], 500);
-                    }
                     CurrencyValue::updateOrCreate(
                         [
                             'currency_type_id' => $type_id,
@@ -135,7 +132,7 @@ class CurrencyValueController extends Controller
                             'period' => $i['period']
                         ],
                         [
-                            'value' => $i['value']
+                            'value' => !$i['value'] ? 0 : $i['value']
                         ]
                     );
 
