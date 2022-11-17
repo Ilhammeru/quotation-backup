@@ -34,6 +34,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
     {{-- custom css --}}
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+    {{-- jquery-ui --}}
+    <link rel="stylesheet" href="{{ asset('assets/plugins/jquery-ui/jquery-ui.css') }}">
+    {{-- jquery --}}
+    <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
+    {{-- jquery-ui --}}
+    <script src="{{ asset('assets/plugins/jquery-ui/jquery-ui.js') }}"></script>
 
     <style>
         .form-check .form-check-input {
@@ -154,7 +160,14 @@
         }
         /* end::pagination */
 
-
+        .ui-autocomplete {
+            position: absolute;
+            z-index: 2150000000 !important;
+            cursor: default;
+            border: 2px solid #ccc;
+            padding: 5px 0;
+            border-radius: 2px;
+        }
     </style>
     
     <title>{{ $title }}</title>
@@ -184,8 +197,6 @@
     @include('adminLte.components.footer')
     {{-- end::footer --}}
 
-    {{-- jquery --}}
-    <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
     {{-- Bootstrap --}}
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     {{-- adminlte --}}

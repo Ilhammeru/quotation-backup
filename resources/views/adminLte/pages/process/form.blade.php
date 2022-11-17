@@ -15,3 +15,27 @@
     <label for="rate" class="col-form-label required">{{ __('view.process_rate') }}</label>
     <input type="number" name="rate" class="form-control form-control-sm" id="rate" placeholder="{{ __('view.process_rate') }}">
 </div>
+
+<script>
+    $( function() {
+        $("#process_code").autocomplete({
+            autoFocus: true,
+            source: function( request, response ) {
+                $.ajax( {
+                    type: 'POST',
+                    url: "{{ route('process.search-spec') }}",
+                    dataType: "json",
+                    data: {
+                        term: request.term
+                    },
+                    success: function( data ) {
+                        response( data );
+                    }
+                });
+            },
+            minLength: 2,
+            // select: function( event, ui ) {
+            // }
+        });
+    } );
+</script>

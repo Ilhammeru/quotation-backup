@@ -62,6 +62,32 @@ class MaterialController extends Controller
     }
 
     /**
+     * Function to show list of current material code based on given key
+     * @param string term
+     * 
+     */
+    public function searchSpec(Request $request)
+    {
+        try {
+            $term = $request->term;
+
+            $data = MaterialSpec::select('specification', 'id')
+                ->where('specification', 'LIKE', "%$term%")
+                ->get();
+            $data = collect($data)->map(function($item) {
+                return [
+                    'id' => $item->id,
+                    'value' => $item->specification
+                ];
+            })->values();
+
+            return response()->json($data);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Failed to get data'], 500);
+        }
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

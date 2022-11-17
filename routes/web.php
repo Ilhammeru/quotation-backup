@@ -96,6 +96,7 @@ Route::prefix('admin')->middleware('auth')->group(function() use ($materials, $c
     Route::get('/material/data/ajax/{type}', [MaterialController::class, 'ajax'])->name('material.ajax');
     Route::post('/material/import', [MaterialController::class, 'import'])->name('material.import');
     Route::post('/material/submit-import', [MaterialController::class, 'submitImport'])->name('material.submit-import');
+    Route::post('/material/search/spec', [MaterialController::class, 'searchSpec'])->name('material.search-spec');
     foreach ($materials as $material) {
         Route::get('material/' . $material['name'] . '/{type}', [MaterialController::class, 'index'])->name('material.' . $material['name']);
         Route::post('material/{type}/store', [MaterialController::class, 'store'])->name('material.store');
@@ -105,6 +106,7 @@ Route::prefix('admin')->middleware('auth')->group(function() use ($materials, $c
     }
 
     // Process
+    Route::post('/process/search/spec', [ProcessRateController::class, 'searchSpec'])->name('process.search-spec');
     Route::post('/process/import', [ProcessRateController::class, 'import'])->name('process.import');
     Route::get('/process/ajax', [ProcessRateController::class, 'ajax'])->name('process.ajax');
     Route::post('/process/submit-import', [ProcessRateController::class, 'submitImport'])->name('process.submit-import');
