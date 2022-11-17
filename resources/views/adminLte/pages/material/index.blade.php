@@ -142,6 +142,9 @@
         $('#modalOverview').on('hidden.bs.modal', function (event) {
             $('#current_file').val('');
         });
+        $('#modalAddMaterial').on('hidden.bs.modal', function (event) {
+            document.getElementById('form-material').reset();
+        });
         // end:: action when modal has been closed
 
         function openModal(action, typeModal) {

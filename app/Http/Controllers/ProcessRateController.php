@@ -32,18 +32,48 @@ class ProcessRateController extends Controller
      */
     public function ajax()
     {
-        $data = ProcessRate::all();
+        $data = ProcessRate::orderBy('process_id', 'asc')->get();
         return DataTables::of($data)
             ->editColumn('process_code_id', function($d) {
                 $name = $d->code ? $d->code->name : '-';
+                return $name;
+            })
+            ->editColumn('process_id', function($d) {
+                $name = $d->group ? $d->group->name : '-';
                 return $name;
             })
             ->addColumn('action', function($d) {
                 return '<button class="btn btn-sm bg-primary-warning" data-url="'. route('process.show', $d->id) .'" id="btn-edit-process-'. $d->id .'" type="button" onclick="editItem('. $d->id .')">Edit</button>
                     <button class="btn btn-sm bg-primary-danger" type="button" onclick="deleteItem('. $d->id .')">Delete</button>';
             })
-            ->rawColumns(['action', 'process_code_id'])
+            ->rawColumns(['action', 'process_code_id', 'process_id'])
             ->make(true);
+    }
+
+    /**
+     * Function to show list of current code code based on given key
+     * @param string term
+     * 
+     */
+    public function searchSpec(Request $request)
+    {
+        try {
+            $term = $request->term;
+
+            $data = ProcessCode::select('name', 'id')
+                ->where('name', 'LIKE', "%$term%")
+                ->get();
+            $data = collect($data)->map(function($item) {
+                return [
+                    'id' => $item->id,
+                    'value' => $item->name
+                ];
+            })->values();
+
+            return response()->json($data);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Failed to get data'], 500);
+        }
     }
 
     /**

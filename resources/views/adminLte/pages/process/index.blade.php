@@ -16,6 +16,7 @@
             <thead class="{{ dt_head_class() }}">
                 <tr>
                     <th>No.</th>
+                    <th>Group</th>
                     <th>Process Code</th>
                     <th>Process Rate</th>
                     <th>Action</th>
@@ -120,11 +121,12 @@
                         return meta.row + meta.settings._iDisplayStart + 1;
                     } 
                 },
+                {data: 'process_id', name: 'process_id'},
                 {data: 'process_code_id', name: 'process_code_id'},
                 {data: 'rate', name: 'rate'},
                 {data: 'action', name: 'action'},
         ];
-        let dt = setDataTable('table-process', columns, dt_route, 2);
+        let dt = setDataTable('table-process', columns, dt_route, 1);
 
         // begin:: action when modal has been closed
         $('#modalImportProcess').on('hidden.bs.modal', function (event) {
