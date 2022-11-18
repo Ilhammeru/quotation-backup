@@ -43,7 +43,7 @@
     </div>
     <!--end::Brand-->
 
-    <div class="sidebar" >
+    <div class="sidebar">
         <!--begin::Aside menu-->
         <nav class="mt-2" style="padding-bottom: 30px !important;">
             <!--begin::Aside Menu-->
@@ -187,6 +187,21 @@
                     </li>
                 @endif
                 {{-- end::setting --}}
+
+
+                <li class="nav-header">ADM</li>
+                
+                {{-- begin::cost --}}
+                <li class="nav-item">
+                    <a href="{{ route('cost.index') }}"
+                        class="nav-link {{ areActiveRoutes(['cost.index']) }}">
+                        {{-- <i class="far fa-circle nav-icon"></i> --}}
+                        <p>{{ __('view.cost_adm') }}</p>
+                    </a>
+                </li>
+                {{-- end::cost --}}
+
+
 
                 {{-- begin::logout --}}
                 <li class="nav-item">

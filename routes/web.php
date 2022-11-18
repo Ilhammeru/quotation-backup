@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CostController;
 use App\Http\Controllers\CurrencyValueController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MaterialController;
@@ -143,4 +144,9 @@ Route::prefix('admin')->middleware('auth')->group(function() use ($materials, $c
     // user
     Route::get('/users/ajax', [UserController::class, 'ajax'])->name('users.ajax');
     Route::resource('users', UserController::class);
+
+    // cost
+    Route::get('/cost/ajax', [CostController::class, 'ajax'])->name('cost.ajax');
+    Route::get('/cost', [CostController::class, 'index'])->name('cost.index');
+    Route::post('/cost', [CostController::class, 'store'])->name('cost.store');
 });
