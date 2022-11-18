@@ -52,5 +52,10 @@ return [
     'process_group' => 'Process Group',
     'process_rate' => 'Process Rate',
     'currency' => 'Currency',
-    'currency_title' => 'Data Qurrency :Name'
+    'currency_title' => 'Data Qurrency :Name',
+    'cost_adm' => 'Cost ADM',
+    'cost_tmmin' => 'Cost TMMIN',
+    'calculate' => 'Calculate',
+    'part_name' => 'Part Name',
+    'part_no' => 'Part No.'
 ];
