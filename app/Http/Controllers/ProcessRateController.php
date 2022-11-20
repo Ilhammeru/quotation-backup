@@ -77,6 +77,44 @@ class ProcessRateController extends Controller
     }
 
     /**
+     * Function to get process code based on group_id
+     * @param int group_id
+     * @return Response
+     */
+    public function searchCodeByGroup(Request $request)
+    {
+        try {
+            $group_id = $request->group_id;
+            $data = ProcessCode::where('process_id', $group_id)
+                ->get();
+            return response()->json(['message' => 'Success get data', 'data' => $data]);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Function to get rate
+     * @param int process_code
+     * @param int process_group
+     * @return Response
+     */
+    public function getRate(Request $request)
+    {
+        try {
+            $group = $request->process_group;
+            $code = $request->process_code;
+
+            $data = ProcessRate::where('process_id', $group)
+                ->where('process_code_id', $code)
+                ->first();
+            return response()->json(['message' => 'Success get rate', 'data' => $data]);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()], 500);
+        }
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

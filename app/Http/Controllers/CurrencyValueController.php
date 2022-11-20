@@ -100,6 +100,51 @@ class CurrencyValueController extends Controller
     }
 
     /**
+     * Function to get rate
+     * 
+     */
+    public function getRate(Request $request)
+    {
+        try {
+            $currency = explode('-', $request->currency);
+            $group = $currency[0];
+            $type = $currency[1];
+            $period = date('Y-m-d', strtotime('01-' . $request->period));
+
+            $data = CurrencyValue::where('period', $period)
+                ->where('currency_type_id', $type)
+                ->where('currency_group_id', $group)
+                ->first();
+            return response()->json(['message' => 'Success get data', 'data' => $data]);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Function to get rate
+     * 
+     */
+    public function getRateCustom(Request $request)
+    {
+        try {
+            $currency = explode(' @ ', $request->currency_group);
+            $group = $currency[0];
+            $currency_type = explode(' @ ', $request->currency_type);
+            $type = $currency_type[0];
+            $period = date('Y-m-d', strtotime('01-' . $request->period));
+
+            $data = CurrencyValue::where('period', $period)
+                ->where('currency_type_id', $type)
+                ->where('currency_group_id', $group)
+                ->first();
+            return response()->json(['message' => 'Success get data', 'data' => $data, 'group' => $group, 'type' => $type, 'period' => $period]);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()], 500);
+        }
+    }
+
+    /**
      * Function to process imported file and save to database
      * @param string filename
      * @return Response

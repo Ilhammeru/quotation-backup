@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
 
 class MaterialController extends Controller
 {
@@ -84,6 +85,49 @@ class MaterialController extends Controller
             return response()->json($data);
         } catch (\Throwable $th) {
             return response()->json(['message' => 'Failed to get data'], 500);
+        }
+    }
+
+    /**
+     * Function to search spec based on group id
+     * @param int group_id
+     * @return Response
+     */
+    public function searchSpecByGroup(Request $request)
+    {
+        try {
+            $group_id = $request->group_id;
+
+            $data = MaterialSpec::where('material_id', $group_id)
+                ->get();
+            $data = collect($data)->map(function($item) {
+                $item->name = $item->specification;
+                return $item;
+            })->all();
+            return response()->json(['message' => 'Success get data', 'data' => $data]);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Function to get rate
+     * 
+     */
+    public function getRate(Request $request)
+    {
+        try {
+            $group = explode(' @ ', $request->group)[0];
+            $spec = explode(' @ ', $request->spec)[0];
+            $period = date('Y-m-d', strtotime('01-' . $request->period));
+
+            $data = MaterialRate::where('period', $period)
+                ->where('material_id', $group)
+                ->where('material_spec_id', $spec)
+                ->first();
+            return response()->json(['message' => 'Success get data', 'data' => $data]);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()], 500);
         }
     }
 

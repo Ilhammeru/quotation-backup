@@ -98,6 +98,8 @@ Route::prefix('admin')->middleware('auth')->group(function() use ($materials, $c
     Route::post('/material/import', [MaterialController::class, 'import'])->name('material.import');
     Route::post('/material/submit-import', [MaterialController::class, 'submitImport'])->name('material.submit-import');
     Route::post('/material/search/spec', [MaterialController::class, 'searchSpec'])->name('material.search-spec');
+    Route::post('/material/search-spec-by-group', [MaterialController::class, 'searchSpecByGroup'])->name('material.search-spec-by-group');
+    Route::post('/material/get-rate', [MaterialController::class, 'getRate'])->name('material.get-rate');
     foreach ($materials as $material) {
         Route::get('material/' . $material['name'] . '/{type}', [MaterialController::class, 'index'])->name('material.' . $material['name']);
         Route::post('material/{type}/store', [MaterialController::class, 'store'])->name('material.store');
@@ -110,10 +112,14 @@ Route::prefix('admin')->middleware('auth')->group(function() use ($materials, $c
     Route::post('/process/search/spec', [ProcessRateController::class, 'searchSpec'])->name('process.search-spec');
     Route::post('/process/import', [ProcessRateController::class, 'import'])->name('process.import');
     Route::get('/process/ajax', [ProcessRateController::class, 'ajax'])->name('process.ajax');
+    Route::post('/process/get-rate', [ProcessRateController::class, 'getRate'])->name('process.get-rate');
+    Route::post('/process/search-code-by-group', [ProcessRateController::class, 'searchCodeByGroup'])->name('process.search-code-by-group');
     Route::post('/process/submit-import', [ProcessRateController::class, 'submitImport'])->name('process.submit-import');
     Route::resource('process', ProcessRateController::class);
 
     // currency
+    Route::post('/currency/get-rate', [CurrencyValueController::class, 'getRate'])->name('currency.get-rate');
+    Route::post('/currency/get-rate-custom', [CurrencyValueController::class, 'getRateCustom'])->name('currency.get-rate-custom');
     Route::get('/currency/data/ajax/{type}/{group}', [CurrencyValueController::class, 'ajax'])->name('currency.ajax');
     Route::post('/currency/import/{type}/{group}', [CurrencyValueController::class, 'import'])->name('currency.import');
     Route::post('/currency/submit-import/{type}/{group}', [CurrencyValueController::class, 'submitImport'])->name('currency.submit-import');
@@ -149,4 +155,6 @@ Route::prefix('admin')->middleware('auth')->group(function() use ($materials, $c
     Route::get('/cost/ajax', [CostController::class, 'ajax'])->name('cost.ajax');
     Route::get('/cost', [CostController::class, 'index'])->name('cost.index');
     Route::post('/cost', [CostController::class, 'store'])->name('cost.store');
+    Route::get('/cost/calculate/{id}', [CostController::class, 'indexCalculate'])->name('cost.show.calculate');
+    Route::post('/cost/calculate/{id}', [CostController::class, 'submitCalculate'])->name('cost.submit.calculate');
 });

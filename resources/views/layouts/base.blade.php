@@ -168,6 +168,86 @@
             padding: 5px 0;
             border-radius: 2px;
         }
+
+        .select2-container--default .select2-selection--single {
+            padding-left: .2rem;
+            padding-right: .2rem;
+        }
+
+        .cost-disabled {
+            pointer-events: none;
+            background: #F0EEEE;
+        }
+        
+        #summary_material_cost,
+        #summary_process_cost,
+        #summary_purchase_cost {
+            pointer-events: none;
+        }
+
+        .title-section-calculate {
+            font-size: 30px;
+            font-weight: bold;
+            color: #8F7E7E;
+        }
+
+        .title-section-calculate > span {
+            font-weight: normal;
+            margin: 0;
+        }
+
+        .content-table {
+            border: 1px solid #E6DADA;
+        }
+        .content-table > .header {
+            background: #E6DADA;
+            width: 100%;
+            height: 17px;
+        }
+
+        .content-table > .body {
+            padding: 11px 14px;
+        }
+
+        .label-grey {
+            color: #8F7E7E;
+            font-weight: normal !important;
+            font-size: 11px;
+            padding-bottom: 0;
+        }
+
+        .border-radius-5 {
+            border-radius: 5px;
+        }
+
+        .times {
+            color: #fff;
+            text-align: center;
+        }
+
+        .table-cost > tbody > tr > td,
+        .table-cost > thead > tr > th {
+            border: 1px solid #E6DADA !important;
+        }
+
+        .table-cost > thead > tr > th,
+        .table-cost > tbody > tr > td {
+            color: #8F7E7E;
+            font-size: 11px;
+            padding: 4px 6px;
+            vertical-align: middle;
+        }
+
+        .cell-disabled {
+            background: #8F7E7E;
+        }
+
+        .title-table-cost {
+            color: #8F7E7E;
+            font-size: 13px;
+            margin: 0 0 9px 0;
+            font-weight: bold;
+        }
     </style>
     
     <title>{{ $title }}</title>
@@ -304,6 +384,14 @@
                 }
             })
 		}
+
+        function addZero(text) {
+            if (text.toString().length == 1) {
+                return '0' + text;
+            } else {
+                return text;
+            }
+        }
     </script>
 
     {{-- custom javascript --}}

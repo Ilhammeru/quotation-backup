@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cost;
+use App\Models\CurrencyValue;
+use App\Models\Material;
+use App\Models\MaterialRate;
+use App\Models\Process;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
+use Vinkla\Hashids\Facades\Hashids;
 
 class CostController extends Controller
 {
@@ -34,11 +39,37 @@ class CostController extends Controller
                 return date('d/m/Y', strtotime($d->created_at));
             })
             ->addColumn('action', function($d) {
-                return '<button class="btn btn-sm bg-primary-warning" type="button">'. __('view.calculate') .'</button>
+                $id = Hashids::encode($d->id);
+                return '<a class="btn btn-sm bg-primary-warning" href="'. route('cost.show.calculate', $id) .'">'. __('view.calculate') .'</a>
                     <button class="btn btn-sm bg-primary-blue" type="button">'. __('view.edit') .'</button>';
             })
             ->rawColumns(['created_at', 'action'])
             ->make(true);
+    }
+
+    /**
+     * Function to show calculate form
+     * @return Renderable
+     */
+    public function indexCalculate($id)
+    {
+        $uid = Hashids::decode($id)[0];
+        $data = Cost::find($uid);
+        $title = __('view.calculate_cost');
+        $material_groups = Material::all();
+        $process_groups = Process::all();
+        $currency_group = CurrencyValue::GROUP_WITH_ID;
+        $currency_types = CurrencyValue::TYPES_WITH_ID;
+        $currency = [];
+        foreach ($currency_types as $type) {
+            foreach ($currency_group as $group) {
+                $currency[] = [
+                    'id' => $group['id'] . '-' . $type['id'],
+                    'name' => $group['name'] . ' ' . $type['name']
+                ];
+            }
+        }
+        return view('adminLte.pages.cost.calculate', compact('data', 'title', 'material_groups', 'currency', 'currency_group', 'currency_types', 'process_groups'));
     }
 
     /**
@@ -77,6 +108,15 @@ class CostController extends Controller
         } catch (\Throwable $th) {
             return response()->json(['message' => $th->getMessage()], 500);
         }
+    }
+
+    /**
+     * Function to submit calculate cost
+     * @param int id
+     */
+    public function submitCalculate(Request $request, $id)
+    {
+        return response()->json(['message' => 'Success', 'data' => ['value' => $request->all(), 'id' => $id]]);
     }
 
     /**

@@ -62,8 +62,8 @@
                         return meta.row + meta.settings._iDisplayStart + 1;
                     } 
                 },
-                {data: 'name', name: 'name'},
                 {data: 'number', name: 'number'},
+                {data: 'name', name: 'name'},
                 {data: 'created_at', name: 'created_at'},
                 {data: 'action', name: 'action'},
         ];
