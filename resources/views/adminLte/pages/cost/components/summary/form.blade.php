@@ -15,19 +15,19 @@
         <div class="col-2">
             <div class="form-group">
                 <label for="summary_material_cost" class="col-form-label label-grey">{{ __('view.material_cost_calculate_title') }}</label>
-                <input type="text" value="0" class="form-control form-control-sm" id="summary_material_cost">
+                <input type="text" value="0" class="form-control form-control-sm" readonly id="summary_material_cost">
             </div>
         </div>
         <div class="col-2">
             <div class="form-group">
                 <label for="summary_process_cost" class="col-form-label label-grey">{{ __('view.process_cost_calculate_title') }}</label>
-                <input type="text" value="0" class="form-control form-control-sm" id="summary_process_cost">
+                <input type="text" value="0" class="form-control form-control-sm" readonly id="summary_process_cost">
             </div>
         </div>
         <div class="col-2">
             <div class="form-group">
                 <label for="summary_purchase_cost" class="col-form-label label-grey">{{ __('view.purchase_cost_calculate_title') }}</label>
-                <input type="text" value="0" class="form-control form-control-sm" id="summary_purchase_cost">
+                <input type="text" value="0" class="form-control form-control-sm" readonly id="summary_purchase_cost">
             </div>
         </div>
         <div class="col-2">

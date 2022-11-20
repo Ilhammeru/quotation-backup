@@ -58,13 +58,13 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label for="material_rate_m_cost" class="col-form-label label-grey">{{ __('view.material_rate') }}</label>
-                <input type="number" oninput="getTotal('material')" class="form-control form-control-sm cost-disabled" value="0" id="material_rate_m_cost">
+                <input type="number" oninput="getTotal('material')" class="form-control form-control-sm cost-disabled" readonly value="0" id="material_rate_m_cost">
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label for="material_exchange_rate_m_cost" class="col-form-label label-grey">{{ __('view.exchange_rate') }}</label>
-                <input type="number" oninput="getTotal('material')" class="form-control form-control-sm cost-disabled" value="0" id="material_exchange_rate_m_cost">
+                <input type="number" oninput="getTotal('material')" class="form-control form-control-sm cost-disabled" readonly value="0" id="material_exchange_rate_m_cost">
             </div>
         </div>
         <div class="col-md-2">
@@ -82,7 +82,7 @@
         <div class="col-md-2">
             <div class="form-group">
                 <label for="material_total_m_cost" class="col-form-label label-grey">{{ __('view.total') }}</label>
-                <input type="number" class="form-control form-control-sm cost-disabled" value="0" id="material_total_m_cost">
+                <input type="number" class="form-control form-control-sm cost-disabled" readonly value="0" id="material_total_m_cost">
             </div>
         </div>
     </div>

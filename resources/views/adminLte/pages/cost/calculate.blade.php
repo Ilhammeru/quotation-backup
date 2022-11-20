@@ -240,7 +240,7 @@
                 for(let y = 0; y < allTotalElem.length; y++) {
                     allTotal.push(parseFloat(allTotalElem[y].innerHTML));
                 }
-                total = allTotal.reduce(function(a, b) { return a + b; });
+                total = allTotal.reduce(function(a, b) { return a + b; }).toFixed(3);
 
                 $(`.${classTotalRow}`).removeClass('d-none');
                 $(`.${classTotalItem}`).html(total);

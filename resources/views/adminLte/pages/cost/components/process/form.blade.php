@@ -40,7 +40,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label for="process_rate_p_cost" class="col-form-label label-grey">{{ __('view.process_rate') }}</label>
-                <input type="number" class="form-control form-control-sm cost-disabled" value="0" id="process_rate_p_cost">
+                <input type="number" class="form-control form-control-sm cost-disabled" readonly value="0" id="process_rate_p_cost">
             </div>
         </div>
         <div class="col-md-2">
@@ -58,7 +58,7 @@
         <div class="col-md-2">
             <div class="form-group">
                 <label for="process_total_p_cost" class="col-form-label label-grey">{{ __('view.total') }}</label>
-                <input type="number" class="form-control form-control-sm cost-disabled" oninput="getTotal('process')" value="0" id="process_total_p_cost">
+                <input type="number" class="form-control form-control-sm cost-disabled" readonly oninput="getTotal('process')" value="0" id="process_total_p_cost">
             </div>
         </div>
     </div>
