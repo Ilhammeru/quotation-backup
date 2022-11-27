@@ -25,6 +25,7 @@
         const process_total_cost = 'process_total_p_cost';
         const process_code_cost = 'process_code_p_cost';
         const process_group_cost = 'process_group_p_cost';
+        let deleteIdProcess = [];
 
         $('#process_group_p_cost').select2();
         $('#process_code_p_cost').select2();
@@ -174,7 +175,7 @@
             }
         }
 
-        function deleteProcessList(id, all = false) {
+        function deleteProcessList(id, fromEdit = false, uid) {
             $(`#delete-process-cost-${id}`).remove();
             setTotalListandToogle(
                 'process-total-per-item',
@@ -183,6 +184,12 @@
                 'process-total-item',
                 'process-total-item-input'
             );
+            if (fromEdit) {
+                addToSummary('process');
+                deleteIdProcess.push(uid);
+                $('#delete_id_process').val(deleteIdProcess);
+            }
+
         }
 
         // ----------------------------------------------------- END MATERIAL COST -------------------------------------------------

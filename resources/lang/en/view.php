@@ -85,5 +85,6 @@ return [
     'add_to_summary_cost' => 'Add to Summary Cost',
     'empty_data' => 'Empty Data',
     'mother_part_no' => 'Mother Part No.',
-    'mother_part_name' => 'Mother Part Name'
+    'mother_part_name' => 'Mother Part Name',
+    'download_excel' => 'Download to Excel'
 ];

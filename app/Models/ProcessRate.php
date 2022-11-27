@@ -18,7 +18,8 @@ class ProcessRate extends Model
         'process_code_id',
         'rate'
     ];
-
+    protected $hidden = ['created_at', 'updated_at'];
+    
     public function code():BelongsTo
     {
         return $this->belongsTo(ProcessCode::class, 'process_code_id', 'id');

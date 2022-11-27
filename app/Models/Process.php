@@ -10,4 +10,5 @@ class Process extends Model
     use HasFactory;
     protected $table = 'process';
     protected $fillable = ['name'];
+    protected $hidden = ['created_at', 'updated_at'];
 }

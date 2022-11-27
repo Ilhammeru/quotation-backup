@@ -2,6 +2,7 @@
     {{-- hidden form --}}
     <input type="hidden" id="calculate_material_rate_id">
     <input type="hidden" id="calculate_material_currency_id">
+    <input type="hidden" id="delete_id_material" name="delete_id_material">
 
     <div class="row">
         <div class="col-3">

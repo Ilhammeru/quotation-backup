@@ -25,6 +25,7 @@
         const purchase_total_cost = 'purchase_total_pc_cost';
         const purchase_type_cost = 'purchase_currency_type_pc_cost';
         const purchase_group_cost = 'purchase_currency_pc_cost';
+        let deleteIdPurchase = [];
 
         $('#purchase_currency_type_pc_cost').select2();
         $('#purchase_currency_pc_cost').select2();
@@ -170,7 +171,7 @@
             }
         }
 
-        function deletePurchaseList(id, all = false) {
+        function deletePurchaseList(id, fromEdit = false, uid) {
             $(`#delete-purchase-cost-${id}`).remove();
             setTotalListandToogle(
                 'purchase-total-per-item',
@@ -180,7 +181,11 @@
                 'purchase-total-item-input'
             );
             // update summary component value
-            addToSummary('purchase');
+            if (fromEdit) {
+                addToSummary('purchase');
+                deleteIdPurchase.push(uid);
+                $('#delete_id_purchase').val(deleteIdPurchase);
+            }
         }
 
         // ----------------------------------------------------- END MATERIAL COST -------------------------------------------------

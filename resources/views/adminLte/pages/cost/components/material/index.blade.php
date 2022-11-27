@@ -25,7 +25,7 @@
         const material_group_field = 'material_group_m_cost';
         const material_spec_field = 'material_spec_m_cost';
         const material_total_cost = 'material_total_m_cost';
-        let materialPayload = [];
+        let deleteIdMaterial = [];
 
         $('#material_group_m_cost').select2();
         $('#material_spec_m_cost').select2();
@@ -224,7 +224,7 @@
             }
         }
 
-        function deleteMaterialList(id, all = false) {
+        function deleteMaterialList(id, fromEdit = false, uid) {
             $(`#delete-material-cost-${id}`).remove();
             setTotalListandToogle(
                 'material-total-per-item',
@@ -233,6 +233,12 @@
                 'material-total-item',
                 'material-total-item-input'
             );
+
+            if (fromEdit) {
+                addToSummary('material');
+                deleteIdMaterial.push(uid);
+                $('#delete_id_material').val(deleteIdMaterial);
+            }
         }
 
         // ----------------------------------------------------- END MATERIAL COST -------------------------------------------------

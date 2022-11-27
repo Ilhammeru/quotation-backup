@@ -1,3 +1,10 @@
+@php
+    [$has_materials, $has_process, $has_purchases] = [false, false, false];    
+    if (count($materials) > 0) {
+        $has_materials = true;
+    }
+@endphp
+
 @extends('layouts.base')
 
 @section('content')
@@ -5,8 +12,9 @@
         <div class="card">
             <div class="card-body">
                 <form action="" id="form-calculate">
+
                     {{-- begin::material-cost --}}
-                    @include('adminLte.pages.cost.components.material.index')
+                    @include('adminLte.pages.cost.components.material.index', ['has_materials' => $has_materials])
                     {{-- end::material-cost --}}
 
                     {{-- begin::process-cost --}}
@@ -41,6 +49,13 @@
                     </div>
                     {{-- end::sumarry cost --}}
                 </form>
+
+                {{-- download excel --}}
+                @if ($type_form == 'edit')
+                    <div class="text-right">
+                        <a href="{{ route('cost.download', $data->id) }}" class="btn btn-sm bg-primary-warning mt-3">{{ __('view.download_excel') }}</a>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -56,7 +71,7 @@
         function calculateRate(dateVal = null, type) {
             let materialGroup, materialSpec, currency, period,
                 processGroup, processCode, pcCurrency, pcCurrencyType,
-                pcPeriod
+                pcPeriod;
 
             if (type == 'material') {
 
@@ -199,6 +214,7 @@
         function addToSummary(type) {
             let val = 0;
             let form = null;
+            let isValid = false;
             let material = $('#summary_material_cost');
             let process = $('#summary_process_cost');
             let purchase = $('#summary_purchase_cost');
@@ -206,20 +222,44 @@
 
             if (type == 'material') {
                 val = $('.material-total-item-input').val();
-                material.val(parseFloat(val));
+                material.val(
+                    val != 0 ?
+                    parseFloat(val).toFixed(3) :
+                    0
+                );
+                isValid = val != 0 ? true : false;
             } else if (type == 'process') {
                 val = $('.process-total-item-input').val();
-                process.val(parseFloat(val));
+                process.val(
+                    val != 0 ?
+                    parseFloat(val).toFixed(3) :
+                    0
+                );
+                isValid = val != 0 ? true : false;
             } else if (type == 'purchase') {
                 val = $('.purchase-total-item-input').val();
-                purchase.val(parseFloat(val));
+                purchase.val(
+                    val != 0 ?
+                    parseFloat(val).toFixed(3) :
+                    0
+                );
+                isValid = val != 0 ? true : false;
             }
 
             // count all total
             let total = parseFloat(material.val()) +
                 parseFloat(process.val()) +
                 parseFloat(purchase.val());
-            totalElem.val(total.toFixed(3));
+            totalElem.val(
+                total != 0 ?
+                total.toFixed(3) :
+                0
+            );
+
+            // notify if success
+            if (isValid) {
+                setNotif(false, 'Successfully added data to Summary');
+            }
         }
 
         function setTotalListandToogle(
@@ -278,10 +318,28 @@
                 'summary_purchase_cost',
                 'summary_total_cost'
             ];
+            let childTotalElem = [
+                'material-total-item-input',
+                'process-total-item-input',
+                'purchase-total-item-input',
+            ];
+            let helper = [
+                'summary_material_cost',
+                'summary_process_cost',
+                'summary_purchase_cost',
+            ];
 
             // manual validation
             if ($('#summary_total_cost').val() == 0) {
                 return setNotif(true, 'Please fill all form');
+            }
+            let err_item = [];
+            for (let z = 0; z < childTotalElem.length; z++) {
+                let v = $(`.${childTotalElem[z]}`).val();
+                let p = $(`#${helper[z]}`).val();
+                if (v != p) {
+                    return setNotif(true, 'Please check your item again. You still have item that you have not submitted');
+                }
             }
 
             let tbody = document.getElementById('body-list-summary');
@@ -291,27 +349,29 @@
             tr += `<td>${tbody.rows.length - 1}</td>`;
 
             for (let a = 0; a < elem.length; a++) {
+                let itemElem = $(`.td-${elem[a]}`);
+                let itemElemField = $(`#td-${elem[a]}_field`);
                 let val = $(`#${elem[a]}`).val();
 
-                let c = '';
-                if (elem[a] == 'summary_total_cost') {
-                    c += 'summary-total-per-item'
+                if (elem[a] != 'summary_total_cost') {
+                    if (
+                        elem[a] != 'mother_part_no' &&
+                        elem[a] != 'mother_part_name'
+                    ) {
+                        // if (val != 0) {
+                        // }
+                        itemElem[0].innerHTML = val;
+                        itemElemField.val(val);
+                    } else {
+                        itemElem[0].innerHTML = val;
+                        itemElemField.val(val);
+                    }
                 }
 
-                tr += `<td class="${c}">
-                    ${val}
-                    <input type="hidden" name="summary[${tbody.rows.length - 2}][${elem[a]}]" value="${val}" />
-                    </td>`;
             }
-            tr += `<td class="text-center">
-                        <button class="times btn btn-sm bg-primary-danger" type="button" onclick="deleteSummaryList(${tbody.rows.length - 1})">
-                            &#215;
-                        </button>
-                    </td>`;
-            tr += '</tr>';
 
-            // append to table
-            $(tr).insertBefore($('#body-list-summary tr:last'));
+            // show item row
+            $('.row-main-summary').removeClass('d-none');
 
             // hide empty state
             $('.summary-empty-state').addClass('d-none');
@@ -320,19 +380,24 @@
             $('.summary-total-row').removeClass('d-none');
 
             // reset form
-            $('#summary_material_cost').val(0);
-            $('#summary_process_cost').val(0);
-            $('#summary_purchase_cost').val(0);
-            $('#summary_total_cost').val(0);
+            // $('#summary_material_cost').val(0);
+            // $('#summary_process_cost').val(0);
+            // $('#summary_purchase_cost').val(0);
+            // $('#summary_total_cost').val(0);
 
             // set total item
-            let allElemTotal = $('.summary-total-per-item');
-            let allTotal = [];
-            for (let b = 0; b < allElemTotal.length; b++) {
-                allTotal.push(parseFloat(allElemTotal[b].innerHTML));
-            }
-            let total = allTotal.reduce(function(a, b) { return a + b; }).toFixed(3);
-            console.log('total',total);
+            let materialCost = parseFloat(
+                $('#td-summary_material_cost_field').val() 
+            );
+            let processCost = parseFloat(
+                $('#td-summary_process_cost_field').val()
+            );
+            let purchaseCost = parseFloat(
+                $('#td-summary_purchase_cost_field').val()
+            );
+            let total = parseFloat(materialCost + processCost + purchaseCost).toFixed(3);
+            $('.td-summary_total_cost')[0].innerHTML = total;
+            $('#td-summary_total_cost_field').val(total);
             $('.summary-total-item-input').val(total);
             $('.summary-total-item').html(total);
         }
@@ -340,18 +405,64 @@
         function submitCost() {
             let url = "{{ route('cost.submit.calculate', ':id') }}";
             url = url.replace(':id', "{{ $data->id }}");
+
+            // validation
+            let total = $('.summary-total-item-input').val();
+            if (total == 0) {
+                return setNotif(true, 'You do not have data on summary cost yet');
+            }
+            if (
+                $('#td-summary_total_cost_field').val() != $('#summary_total_cost').val() ||
+                $('.material-total-item-input').val() != $('#summary_material_cost').val() ||
+                $('.process-total-item-input').val() != $('#summary_process_cost').val() ||
+                $('.purchase-total-item-input').val() != $('#summary_purchase_cost').val()
+            ) {
+                return setNotif(true, 'Your total is not balance');
+            }
+
             $.ajax({
                 type: 'POST',
                 url: url,
                 data: $('#form-calculate').serialize(),
                 beforeSend: function() {
-                    
+                    setLoading('summary-submit-cost-btn', true);
                 },
                 success: function(res) {
-                    console.log('res',res)
+                    setLoading('summary-submit-cost-btn', false);
+                    setNotif(false, res.message);
+                    window.location.href = res.url;
                 },
                 error: function(err) {
+                    setLoading('summary-submit-cost-btn', false);
+                    return false;
                     setNotif(true, err.responseJSON ? err.responseJSON.message : 'Failed to save data');
+                }
+            })
+        }
+
+        function deleteSummaryList(id) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Are you sure you want to delete this data?',
+                text: "If you delete this data, all calculate cost data will be deleted too",
+                showCancelButton: true,
+                cancelButtonText: 'Cancel',
+                confirmButtonText: 'Yes! Delete it',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let url = "{{ route('cost.delete', ':id') }}";
+                    url = url.replace(':id', id);
+                    $.ajax({
+                        type: 'delete',
+                        url: url,
+                        success: function(res) {
+                            setNotif(false, res.message);
+                            window.location.href = res.url;
+                        },
+                        error: function(err) {
+                            setNotif(true, err.responseJSON == undefined ? err.responseText : err.responseJSON.message);
+                        }
+                    })
                 }
             })
         }

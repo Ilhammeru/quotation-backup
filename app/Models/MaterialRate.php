@@ -16,6 +16,7 @@ class MaterialRate extends Model
         'period',
         'rate'
     ];
+    protected $hidden = ['created_at', 'updated_at'];
 
     const KEY_TEMPLATE_1 = 'Template Material Item';
     const KEY_TEMPLATE_2 = "Don't delete this Header or change the column format";

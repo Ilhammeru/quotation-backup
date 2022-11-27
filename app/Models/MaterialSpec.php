@@ -13,4 +13,5 @@ class MaterialSpec extends Model
         'material_id',
         'specification'
     ];
+    protected $hidden = ['created_at', 'updated_at'];
 }

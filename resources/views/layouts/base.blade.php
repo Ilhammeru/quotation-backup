@@ -295,6 +295,10 @@
     @include('adminLte.helpers.message-alert')
 
     <script>
+        @if (session()->has('error_message'))
+            setNotif(true, "{{ session('error_message') }}")
+        @endif
+
         function setDataTable(tableId, columns, route, sort = null) {
             let sortOption = [[0, 'desc']];
             if (sort) {

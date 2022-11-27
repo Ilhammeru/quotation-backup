@@ -155,6 +155,10 @@ Route::prefix('admin')->middleware('auth')->group(function() use ($materials, $c
     Route::get('/cost/ajax', [CostController::class, 'ajax'])->name('cost.ajax');
     Route::get('/cost', [CostController::class, 'index'])->name('cost.index');
     Route::post('/cost', [CostController::class, 'store'])->name('cost.store');
+    Route::put('/cost/{id}', [CostController::class, 'update'])->name('cost.update');
+    Route::delete('/cost/{id}', [CostController::class, 'destroy'])->name('cost.delete');
+    Route::get('/cost/download/{id}', [CostController::class, 'download'])->name('cost.download');
     Route::get('/cost/calculate/{id}', [CostController::class, 'indexCalculate'])->name('cost.show.calculate');
+    Route::get('/cost/calculate/{id}/edit', [CostController::class, 'editCalculate'])->name('cost.edit.calculate');
     Route::post('/cost/calculate/{id}', [CostController::class, 'submitCalculate'])->name('cost.submit.calculate');
 });

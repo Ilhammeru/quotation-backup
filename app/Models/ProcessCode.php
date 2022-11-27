@@ -10,4 +10,5 @@ class ProcessCode extends Model
     use HasFactory;
     protected $table = 'process_code';
     protected $fillable = ['name', 'process_id'];
+    protected $hidden = ['created_at', 'updated_at'];
 }

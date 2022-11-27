@@ -105,27 +105,12 @@
             }
         }
 
-        function editItem(id) {
-            let elem = $('#btn-edit-process-' + id);
-            let url = elem.data('url');
-            $.ajax({
-                type: 'GET',
-                url: url,
-                beforeSend: function() {
-                    
-                },
-                success: function(res) {
-                    console.log(res);
-                    openModal('edit', 'manual');
-                    fillValue(res.data);
-                    // manipulate attribute
-                    $('#form-cost').attr('action', res.url);
-                    $('#form-cost').attr('method', 'PUT');
-                },
-                error: function(err) {
-                    setNotif(true, err.responseJSON);
-                }
-            })
+        function editItem(name, number, urlEdit) {
+            $('#modalAddCost').modal('show');
+            $('#name').val(name);
+            $('#number').val(number);
+            $('#form-cost').attr('action', urlEdit);
+            $('#form-cost').attr('method', 'PUT');
         }
 
         function fillValue(res) {

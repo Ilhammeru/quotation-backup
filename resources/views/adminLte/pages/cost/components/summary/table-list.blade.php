@@ -16,51 +16,49 @@
                     </tr>
                 </thead>
                 <tbody id="body-list-summary">
-                    <tr class="summary-empty-state">
+                    <tr class="summary-empty-state {{ $type_form != 'edit' ? '' : 'd-none' }}">
                         <td colspan="8" class="text-center">{{ __('view.empty_data') }}</td>
                     </tr>
-                    {{-- <tr>
+                    <tr class="row-main-summary {{ $type_form == 'edit' ? '' : 'd-none' }}">
                         <td>1</td>
-                        <td>PN-01 456</td>
-                        <td>Plastic Seed</td>
-                        <td>Resin</td>
-                        <td>PP-2/AZ564GL STD COLOR</td>
-                        <td>April 18</td>
-                        <td>21990</td>
-                        <td>21990</td>
-                        <td>0,03</td>
-                        <td>0,15</td>
-                        <td>659,86</td>
+                        <td>
+                            <span class="td-mother_part_no">{{ $type_form == 'edit' ? $data->number : '' }}</span>
+                            <input type="hidden" name="summary[mother_part_no]" id="td-mother_part_no_field" value="{{ $type_form == 'edit' ? $data->number : '' }}">
+                        </td>
+                        <td>
+                            <span class="td-mother_part_name">{{ $type_form == 'edit' ? $data->name : '' }}</span>
+                            <input type="hidden" name="summary[mother_part_name]" id="td-mother_part_name_field" value="{{ $type_form == 'edit' ? $data->name : '' }}">
+                        </td>
+                        <td>
+                            <span class="td-summary_material_cost">{{ $type_form == 'edit' ? $data->material_cost : 0 }}</span>
+                            <input type="hidden" name="summary[material]" id="td-summary_material_cost_field" value="{{ $type_form == 'edit' ? $data->material_cost : 0 }}">
+                        </td>
+                        <td>
+                            <span class="td-summary_process_cost">{{ $type_form == 'edit' ? $data->process_cost : 0 }}</span>
+                            <input type="hidden" name="summary[process]" id="td-summary_process_cost_field" value="{{ $type_form == 'edit' ? $data->process_cost : 0 }}">
+                        </td>
+                        <td>
+                            <span class="td-summary_purchase_cost">{{ $type_form == 'edit' ? $data->purchase_cost : 0 }}</span>
+                            <input type="hidden" name="summary[purchase]" id="td-summary_purchase_cost_field" value="{{ $type_form == 'edit' ? $data->purchase_cost : 0 }}">
+                        </td>
+                        <td>
+                            <span class="td-summary_total_cost">{{ $type_form == 'edit' ? $data->total_cost : 0 }}</span> 
+                            <input type="hidden" name="summary[total]" id="td-summary_total_cost_field" value="{{ $type_form == 'edit' ? $data->total_cost : 0 }}">
+                        </td>
                         <td class="text-center">
-                            <button class="times btn btn-sm bg-primary-danger">
-                                &#215;
-                            </button>
+                            @if ($type_form == 'edit')
+                                <button class="times btn btn-sm bg-primary-danger" type="button" onclick="deleteSummaryList({{ $data->id }})">
+                                    &#215;
+                                </button>
+                            @endif
                         </td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>PN-01 456</td>
-                        <td>Plastic Seed</td>
-                        <td>Resin</td>
-                        <td>PP-2/AZ564GL STD COLOR</td>
-                        <td>April 18</td>
-                        <td>21990</td>
-                        <td>21990</td>
-                        <td>0,03</td>
-                        <td>0,15</td>
-                        <td>659,86</td>
-                        <td class="text-center">
-                            <button class="times btn btn-sm bg-primary-danger">
-                                &#215;
-                            </button>
-                        </td>
-                    </tr> --}}
-                    <tr class="summary-total-row d-none">
+                    <tr class="summary-total-row {{ $type_form == 'edit' ? '' : 'd-none' }}">
                         <td colspan="6"><b>{{ __('view.total') }}</b></td>
                         <td class="summary-total-item">
-                            0
+                            {{ $type_form == 'edit' ? $data->total_cost : 0 }}
                         </td>
-                        <input type="hidden" class="summary-total-item-input">
+                        <input type="hidden" class="summary-total-item-input" value="{{ $type_form == 'edit' ? $data->total_cost : 0 }}">
                         <td class="cell-disabled"></td>
                     </tr>
                 </tbody>
@@ -68,7 +66,7 @@
         </div>
 
         <div class="text-right">
-            <button class="btn btn-sm bg-primary-success" type="button" onclick="submitCost()">{{ __('view.submit') }}</button>
+            <button class="btn btn-sm bg-primary-success" type="button" onclick="submitCost()"  id="summary-submit-cost-btn">{{ __('view.submit') }}</button>
         </div>
     </div>
 </div>

@@ -1,6 +1,7 @@
 <div class="material-cost-form">
     {{-- hidden form --}}
     <input type="hidden" id="calculate_process_rate_id">
+    <input type="hidden" id="delete_id_process" name="delete_id_process">
 
     <div class="row">
         <div class="col-4">

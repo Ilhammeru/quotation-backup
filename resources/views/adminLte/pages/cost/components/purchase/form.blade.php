@@ -1,6 +1,7 @@
 <div class="purchase-cost-form">
     {{-- hidden form --}}
     <input type="hidden" id="calculate_purchase_rate_id">
+    <input type="hidden" id="delete_id_purchase" name="delete_id_purchase">
 
     <div class="row">
         <div class="col-4">

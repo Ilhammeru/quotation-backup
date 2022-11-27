@@ -10,6 +10,7 @@ class CurrencyValue extends Model
     use HasFactory;
     protected $table = 'currency_value';
     protected $fillable = ['currency_type_id', 'currency_group_id', 'period', 'value'];
+    protected $hidden = ['created_at', 'updated_at'];
     
     const SLIDE_TYPE = 1;
     const NON_SLIDE_TYPE = 2;

@@ -11,6 +11,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "maatwebsite/excel": "^3.1",
+        "phpoffice/phpspreadsheet": "^1.25",
         "psr/simple-cache": "2.0",
         "spatie/laravel-permission": "^5.5",
         "vinkla/hashids": "^10.0",

@@ -10,4 +10,5 @@ class CurrencyGroup extends Model
     use HasFactory;
     protected $table = 'currency_group';
     protected $fillable = ['name'];
+    protected $hidden = ['created_at', 'updated_at'];
 }
