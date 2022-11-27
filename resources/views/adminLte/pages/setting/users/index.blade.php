@@ -97,7 +97,6 @@
                     
                 },
                 success: function(res) {
-                    console.log(res);
                     openModal('edit', res.url);
                     $('#email').val(res.data.email);
                     $('#role').val(res.data.role.id);
@@ -121,6 +120,7 @@
                     setLoading('btn-submit', true);
                 },
                 success: function(res) {
+                    console.log('res',res)
                     setLoading('btn-submit', false);
                     closeModal();
                     resetForm('form-users');
@@ -128,6 +128,7 @@
                     setNotif(false, res.message)
                 },
                 error: function(err) {
+                    console.log('err',err)
                     setLoading('btn-submit', false);
                     setNotif(true, err.responseJSON ? err.responseJSON.message : 'Failed to save permission');
                 }

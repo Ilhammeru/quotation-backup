@@ -1,6 +1,6 @@
 <div class="form group mb-3">
-    <label for="email" class="col-form-label required">{{ __('view.email_address') }}</label>
-    <input type="email" name="email" placeholder="{{ __('view.email_address') }}" value="" class="form-control form-control-sm" id="email">
+    <label for="username" class="col-form-label required">{{ __('view.username') }}</label>
+    <input type="text" name="username" placeholder="{{ __('view.username') }}" value="" class="form-control form-control-sm" id="username">
 </div>
 <div class="form group mb-3">
     <label for="password" class="col-form-label required">{{ __('view.password') }}</label>

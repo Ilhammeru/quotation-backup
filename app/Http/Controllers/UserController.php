@@ -60,7 +60,7 @@ class UserController extends Controller
     {
         try {
             $validate = Validator::make($request->all(), [
-                'email' => 'required|email',
+                'username' => 'required',
                 'password' => 'required',
                 'role' => 'required'
             ]);
@@ -69,7 +69,7 @@ class UserController extends Controller
             }
 
             $user = new User();
-            $user->email = $request->email;
+            $user->email = $request->username;
             $user->password = Hash::make($request->password);
             $user->role = $request->role;
             $user->save();
@@ -122,7 +122,7 @@ class UserController extends Controller
     {
         try {
             $validate = Validator::make($request->all(), [
-                'email' => 'required|email',
+                'username' => 'required',
                 'role' => 'required'
             ]);
             if ($validate->fails()) {
@@ -130,7 +130,7 @@ class UserController extends Controller
             }
 
             $user = User::find($id);
-            $user->email = $request->email;
+            $user->email = $request->username;
             $current_role = $user->role;
 
             // detach role

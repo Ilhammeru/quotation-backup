@@ -4,6 +4,7 @@ use function PHPSTORM_META\map;
 
 return [
     'email_address' => 'Email Address',
+    'username' => 'Username',
     'password' => 'Password',
     'login_title' => 'login quotation tbina mkt',
     'data_material_resin' => 'Data Material Resin',
